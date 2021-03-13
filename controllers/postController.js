@@ -1,28 +1,36 @@
-const bodyParser = require('body-parser')
+const express = require('express')
 const axios = require('axios');
+const Post = require('../models/post')
+express.b
 
 
 
 
 exports.getPosts = (req,res) =>{
-    res.json({
-        post:[
-            {
-                id:1,
-                title:"first post"
-            },
-            {
-                id:2,
-                title:"second post"
-            }
-        ]
-    })
+ Post.find((err,post)=>{
+     if(err) return console.log(err);
+
+     res.json({
+         data:post
+     })
+ })
 }
 
-exports.setPost =(req,res)=>{
-    const name = req.body.name;
-    const id = req.body.id;
+exports.createPost = (req,res)=>{
+   const post = new Post(req.body);
+    post.save((err,result)=>{
+        if(err){
+            res.status(500).json(
+              err
+            )
+        }
     
-   console.log(name, id);
-}
+        res.status(200).json({
+            post:result
+        })
 
+    })
+    // console.log(post)
+    // console.log(req.body)
+
+}

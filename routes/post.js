@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 router.get("/",postController.getPosts);
-router.post("/",postController.setPost);
+router.post("/post",postController.createPost);
 
  
 module.exports = router;
